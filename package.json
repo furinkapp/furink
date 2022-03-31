@@ -1,5 +1,7 @@
 {
 	"name": "@furinkapp/furink",
+	"description": "This project contains the core frontend of furink.",
+	"version": "1.0.0",
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
@@ -39,5 +41,16 @@
 	"lint-staged": {
 		"*.ts": "eslint --cache --fix",
 		"*.{ts,js,css,md,scss}": "prettier --write"
-	}
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/furinkapp/furink.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/furinkapp/furink/issues"
+	},
+	"homepage": "https://github.com/furinkapp/furink#readme"
 }
