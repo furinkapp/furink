@@ -10,7 +10,7 @@
 		"lint": "next lint",
 		"storybook": "start-storybook -p 6006",
 		"build-storybook": "build-storybook",
-		"prepare": "yarn husky install"
+		"prepare": "pnpx husky install"
 	},
 	"dependencies": {
 		"next": "12.0.3",
@@ -52,5 +52,15 @@
 	"bugs": {
 		"url": "https://github.com/furinkapp/furink/issues"
 	},
-	"homepage": "https://github.com/furinkapp/furink#readme"
+	"homepage": "https://github.com/furinkapp/furink#readme",
+	"pnpm": {
+		"overrides": {
+			"glob-parent@<5.1.2": ">=5.1.2",
+			"next@>=10.0.0 <12.1.0": ">=12.1.0",
+			"trim@<0.0.3": ">=0.0.3",
+			"next@>=12.0.0 <12.0.5": ">=12.0.5",
+			"next@>=12.0.0 <12.0.9": ">=12.0.9",
+			"node-fetch@<2.6.7": ">=2.6.7"
+		}
+	}
 }
