@@ -1,0 +1,38 @@
+{
+	"name": "@furinkapp/furink",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint"
+	},
+	"dependencies": {
+		"@prisma/client": "^4.14.0",
+		"@reduxjs/toolkit": "^1.9.5",
+		"@stripe/react-stripe-js": "^2.1.0",
+		"@stripe/stripe-js": "^1.53.0",
+		"@supabase/supabase-js": "^2.22.0",
+		"@types/node": "20.1.7",
+		"@types/react": "18.2.6",
+		"@types/react-dom": "18.2.4",
+		"eslint": "8.40.0",
+		"eslint-config-next": "13.4.2",
+		"next": "13.4.2",
+		"react": "18.2.0",
+		"react-dom": "18.2.0",
+		"react-redux": "^8.0.5",
+		"redux": "^4.2.1",
+		"styled-components": "6.0.0-rc.1",
+		"styled-system": "^5.1.5",
+		"typescript": "5.0.4"
+	},
+	"devDependencies": {
+		"@types/styled-components": "^5.1.26",
+		"encoding": "^0.1.13",
+		"eslint-config-prettier": "^8.8.0",
+		"prettier": "^2.8.8",
+		"prisma": "^4.14.0"
+	}
+}
