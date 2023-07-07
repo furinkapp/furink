@@ -1,7 +1,0 @@
-{
-	"extends": "eslint-config-infernal",
-	"root": true,
-	"parserOptions": {
-		"project": "./tsconfig.json"
-	}
-}

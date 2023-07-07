@@ -14,9 +14,9 @@ export default function Root() {
 
 	return (
 		<form
-			onSubmit={async (ev) => {
+			onSubmit={(ev): void => {
 				ev.preventDefault();
-				await supabase.auth.signInWithPassword({ email, password });
+				supabase.auth.signInWithPassword({ email, password });
 			}}
 		>
 			<input

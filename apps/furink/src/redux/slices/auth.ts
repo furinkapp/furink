@@ -22,9 +22,10 @@ interface LoginPayload {
 }
 
 export const register = createAsyncThunk<
-	{ success: true; user: User | null; session: Session | null } | { success: false; error: any },
+	| { success: false; error: unknown }
+	| { success: true; user: User | null; session: Session | null },
 	RegisterPayload
->("auth/register", async (data) =>
+>("auth/register", (data: RegisterPayload) =>
 	supabase.auth
 		.signUp({
 			email: data.email,
@@ -32,7 +33,7 @@ export const register = createAsyncThunk<
 		})
 		.then(
 			(res) => ({ success: true, ...res.data }),
-			(err) => ({ success: false, error: err })
+			(err: unknown) => ({ success: false, error: err })
 		)
 );
 
@@ -41,7 +42,7 @@ export const loginWithPassword = createAsyncThunk(
 	async (data: LoginPayload) =>
 		supabase.auth.signInWithPassword(data).then(
 			(res) => ({ success: true, ...res.data }),
-			(err) => ({ success: false, error: err })
+			(err) => ({ success: false, error: err as unknown })
 		)
 );
 

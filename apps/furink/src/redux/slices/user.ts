@@ -21,4 +21,4 @@ export const user = createSlice({
 	reducers: {},
 });
 
-export const useUser = () => useAppSelector((s) => s.user);
+export const useUser = (): UserState => useAppSelector((s) => s.user);
