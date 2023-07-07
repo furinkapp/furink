@@ -1,3 +1,6 @@
 {
-	"extends": ["eslint-config-infernal", "next/core-web-vitals"]
+	"extends": ["eslint-config-infernal", "next/core-web-vitals"],
+	"parserOptions": {
+		"project": "./tsconfig.json"
+	}
 }

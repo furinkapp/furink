@@ -24,8 +24,8 @@ importers:
         specifier: ^8.44.0
         version: 8.44.0
       eslint-config-infernal:
-        specifier: ^1.0.3
-        version: 1.0.3(@typescript-eslint/eslint-plugin@5.61.0)(@typescript-eslint/parser@5.61.0)(eslint-config-prettier@8.8.0)(eslint@8.44.0)(typescript@5.1.6)
+        specifier: ^1.1.0
+        version: 1.1.0(@typescript-eslint/eslint-plugin@5.61.0)(@typescript-eslint/parser@5.61.0)(eslint-config-prettier@8.8.0)(eslint@8.44.0)(typescript@5.1.6)
       eslint-config-prettier:
         specifier: ^8.8.0
         version: 8.8.0(eslint@8.44.0)
@@ -2815,7 +2815,7 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001512
+      caniuse-lite: 1.0.30001513
       electron-to-chromium: 1.4.451
       node-releases: 2.0.12
       update-browserslist-db: 1.0.11(browserslist@4.21.9)
@@ -2874,6 +2874,10 @@ packages:
 
   /caniuse-lite@1.0.30001512:
     resolution: {integrity: sha512-2S9nK0G/mE+jasCUsMPlARhRCts1ebcp2Ji8Y8PWi4NDE1iRdLCnEPHkEfeBrGC45L4isBx5ur3IQ6yTE2mRZw==}
+    dev: false
+
+  /caniuse-lite@1.0.30001513:
+    resolution: {integrity: sha512-pnjGJo7SOOjAGytZZ203Em95MRM8Cr6jhCXNF/FAXTpCTRTECnqQWLpiTRqrFtdYcth8hf4WECUpkezuYsMVww==}
     dev: false
 
   /chalk@2.4.2:
@@ -3364,8 +3368,8 @@ packages:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
 
-  /eslint-config-infernal@1.0.3(@typescript-eslint/eslint-plugin@5.61.0)(@typescript-eslint/parser@5.61.0)(eslint-config-prettier@8.8.0)(eslint@8.44.0)(typescript@5.1.6):
-    resolution: {integrity: sha512-f8FwsD/2Yh1UZVksMksBbgK3lEa9JDBc5Bape8CliB5XS1Oc0vP3xhkLypM51r+KWq7JHnhGs2qib7B6Eu0SkA==}
+  /eslint-config-infernal@1.1.0(@typescript-eslint/eslint-plugin@5.61.0)(@typescript-eslint/parser@5.61.0)(eslint-config-prettier@8.8.0)(eslint@8.44.0)(typescript@5.1.6):
+    resolution: {integrity: sha512-Qb4mXJNZ0sQifr2i37da0TkpfyJtWC1pBQ9WyjoBwINUVsc4dYA6pwZF4RMAD72NhvyDt1mi4pdKw6aW+bXaAA==}
     peerDependencies:
       '@typescript-eslint/eslint-plugin': ^5.61.0
       '@typescript-eslint/parser': ^5.61.0
@@ -4777,7 +4781,7 @@ packages:
       '@next/env': 13.4.5
       '@swc/helpers': 0.5.1
       busboy: 1.6.0
-      caniuse-lite: 1.0.30001512
+      caniuse-lite: 1.0.30001513
       postcss: 8.4.14
       react: 17.0.2
       react-dom: 17.0.2(react@17.0.2)
