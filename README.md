@@ -33,6 +33,20 @@ For developing the mobile app, you'll also need all of [Tauri v2's prerequisites
 1. Clone the repository.
 2. Run `pnpm install` to install the dependencies.
 
+### Development
+
+#### Web
+
+To start the web app in development mode, run `pnpm dev` in its directory. This will start a development server on port 3000.
+
+#### Mobile
+
+To start the mobile app in development mode, run `pnpm dev` in its directory. This will start a development server on port 3000.
+
+For previewing the app on an Android device, run `pnpm tauri android dev` in the mobile app's directory. This will start the development server and open the app in an Android emulator or on a connected device.
+
+For previewing the app on an iOS device, run `pnpm tauri ios dev` in the mobile app's directory. This will start the development server and open the app in an iOS simulator or on a connected device.
+
 ## License
 
 This project is licensed under a dual license of the MIT License and the Apache License 2.0. You may choose either of these licenses at your discretion. See [LICENSE-MIT](LICENSE-MIT) and [LICENSE-APACHE-2.0](LICENSE-APACHE-2.0) for details.
