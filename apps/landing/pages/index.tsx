@@ -101,7 +101,7 @@ export default function App() {
 			<Container>
 				<Header>Get yourselves ready...</Header>
 				<Content>
-					<Link href="https://www.fur.ink/">fur.ink</Link> is a platform for artists to post their
+					<Link href="https://fur.ink/">fur.ink</Link> is a platform for artists to post their
 					work, and commission openings. With integrations for other social media platforms, fur.ink
 					provides a centralized method to distribute commission information.
 				</Content>
