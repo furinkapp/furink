@@ -265,6 +265,9 @@ importers:
       rxjs:
         specifier: ^7.2.0
         version: 7.8.1
+      true-myth:
+        specifier: ^7.0.1
+        version: 7.0.1
     devDependencies:
       '@nestjs/cli':
         specifier: ^10.1.11
@@ -9351,6 +9354,11 @@ packages:
     dependencies:
       escape-string-regexp: 5.0.0
     dev: true
+
+  /true-myth@7.0.1:
+    resolution: {integrity: sha512-YYZ6Ev437+GuuPU1rfwwVw8n13BRYfG1U79uk4xy3XIxalICOujTE/EbD/l82RQ3t9Kam+1znJuFd6Qoyj6yYQ==}
+    engines: {node: 18.* || >= 20.*}
+    dev: false
 
   /ts-api-utils@1.0.1(typescript@5.1.6):
     resolution: {integrity: sha512-lC/RGlPmwdrIBFTX59wwNzqh7aR2otPNPR/5brHZm/XKFYKsfqxihXUe9pU3JI+3vGkl+vyCoNNnPhJn3aLK1A==}
