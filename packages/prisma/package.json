@@ -1,0 +1,17 @@
+{
+	"name": "@furinkapp/prisma",
+	"version": "1.0.0",
+	"main": "dist/index.js",
+	"scripts": {
+		"dev": "prisma generate --watch & tsc --watch"
+	},
+	"devDependencies": {
+		"@mermaid-js/mermaid-cli": "^10.2.4",
+		"prisma": "^5.0.0",
+		"prisma-erd-generator": "^1.8.0",
+		"typescript": "^5"
+	},
+	"dependencies": {
+		"@prisma/client": "^5.0.0"
+	}
+}

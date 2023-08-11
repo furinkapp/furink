@@ -1,0 +1,150 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator erd {
+  provider = "prisma-erd-generator"
+  output = "../docs/erd.svg"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String               @id @db.Uuid
+  ownedShops   Shop[]
+  accessRoles  ShopAccessRoleUser[]
+  posts        ShopPost[]
+  listings     ShopListing[]
+  orders       Order[]
+  auditLogActivities ShopAuditLog[]
+}
+
+model Shop {
+  id           String           @id @db.Uuid
+  name         String
+  // owner
+  owner        User             @relation(fields: [ownerId], references: [id])
+  ownerId      String
+  // categories
+  categories   ShopCategory[]
+  // access control
+  shopRoles    ShopAccessRole[]
+  // content
+  posts        ShopPost[]
+  listings     ShopListing[]
+  orders       Order[]
+  auditLogs ShopAuditLog[]
+}
+
+model ShopCategory {
+  id       String        @id @db.Uuid
+  name     String
+  shop     Shop          @relation(fields: [shopId], references: [id])
+  shopId   String
+  // content
+  posts    ShopPost[]
+  listings ShopListing[]
+}
+
+model ShopAccessRoleUser {
+  user         User           @relation(fields: [userId], references: [id])
+  userId       String
+  accessRole   ShopAccessRole @relation(fields: [accessRoleId], references: [id])
+  accessRoleId String         @db.Uuid
+
+  @@id([userId, accessRoleId])
+}
+
+model ShopAccessRole {
+  id     String               @id @db.Uuid
+  name   String
+  shop   Shop                 @relation(fields: [shopId], references: [id])
+  shopId String
+  // users
+  users  ShopAccessRoleUser[]
+}
+
+enum ShopCapability {
+  EDIT_SHOP
+}
+
+model ShopPost {
+  id         String       @id @db.Uuid
+  title      String       @db.VarChar(255)
+  content    String       @db.Text
+  shop       Shop         @relation(fields: [shopId], references: [id])
+  shopId     String
+  category   ShopCategory @relation(fields: [categoryId], references: [id])
+  categoryId String
+  author     User         @relation(fields: [authorId], references: [id])
+  authorId   String
+}
+
+model ShopListing {
+  id         String       @id @db.Uuid
+  title      String       @db.VarChar(255)
+  content    String       @db.Text
+  shop       Shop         @relation(fields: [shopId], references: [id])
+  shopId     String
+  category   ShopCategory @relation(fields: [categoryId], references: [id])
+  categoryId String
+  author     User         @relation(fields: [authorId], references: [id])
+  authorId   String
+  items      OrderItem[]
+}
+
+model ShopAuditLog {
+  id        String             @id @db.Uuid
+  shop      Shop               @relation(fields: [shopId], references: [id])
+  shopId    String
+  user      User?              @relation(fields: [userId], references: [id])
+  userId    String?
+  action    ShopAuditLogAction
+  createdAt DateTime           @default(now())
+}
+
+enum ShopAuditLogAction {
+  CREATE
+  UPDATE
+  DELETE
+}
+
+model Order {
+  id              String          @id @db.Uuid
+  shop            Shop            @relation(fields: [shopId], references: [id])
+  shopId          String
+  // customer
+  customer        User            @relation(fields: [customerId], references: [id])
+  customerId      String
+  items           OrderItem[]
+  // timestamps
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  // payment
+  paymentStatus   PaymentStatus
+  paymentProvider PaymentProvider
+}
+
+model OrderItem {
+  listing   ShopListing @relation(fields: [listingId], references: [id])
+  listingId String
+  order     Order       @relation(fields: [orderId], references: [id])
+  orderId   String      @db.Uuid
+  quantity  Int
+
+  @@id([listingId, orderId])
+}
+
+enum PaymentProvider {
+  STRIPE
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  REFUNDED
+  CANCELLED
+}

@@ -1,0 +1,18 @@
+{
+	"name": "@furinkapp/session",
+	"version": "1.0.0",
+	"description": "Session storage powered by Redis.",
+	"main": "dist/index.js",
+	"scripts": {
+		"dev": "tsc --watch"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"typescript": "^5"
+	},
+	"dependencies": {
+		"redis": "^4.6.7"
+	}
+}
