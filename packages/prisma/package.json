@@ -6,12 +6,12 @@
 		"dev": "prisma generate --watch & tsc --watch"
 	},
 	"devDependencies": {
-		"@mermaid-js/mermaid-cli": "^10.2.4",
-		"prisma": "^5.0.0",
-		"prisma-erd-generator": "^1.8.0",
-		"typescript": "^5"
+		"@mermaid-js/mermaid-cli": "^10.3.0",
+		"prisma": "^5.1.1",
+		"prisma-erd-generator": "^1.11.0",
+		"typescript": "^5.1.6"
 	},
 	"dependencies": {
-		"@prisma/client": "^5.0.0"
+		"@prisma/client": "^5.1.1"
 	}
 }
