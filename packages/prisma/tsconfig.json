@@ -4,7 +4,8 @@
 		"rootDir": "./src",
 		"outDir": "./dist",
 		"composite": true,
-		"moduleResolution": "Node"
+		"moduleResolution": "Node",
+		"module": "CommonJS"
 	},
 	"include": ["./src/index.ts"]
 }

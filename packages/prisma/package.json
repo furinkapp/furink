@@ -3,7 +3,8 @@
 	"version": "1.0.0",
 	"main": "dist/index.js",
 	"scripts": {
-		"dev": "prisma generate --watch & tsc --watch"
+		"dev": "prisma generate --watch & tsc --watch",
+		"build:dev": "prisma generate && tsc"
 	},
 	"devDependencies": {
 		"@mermaid-js/mermaid-cli": "^10.3.0",
