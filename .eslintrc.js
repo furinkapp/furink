@@ -8,6 +8,7 @@ module.exports = {
 	rules: {
 		// broken in eslint-config-infernal
 		"new-cap": "off",
+		"no-void": "off",
 	},
 	ignorePatterns: ["next-env.d.ts"],
 };

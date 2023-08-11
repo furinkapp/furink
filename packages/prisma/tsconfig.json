@@ -3,7 +3,8 @@
 	"compilerOptions": {
 		"rootDir": "./src",
 		"outDir": "./dist",
-		"composite": true
+		"composite": true,
+		"moduleResolution": "Node"
 	},
 	"include": ["./src/index.ts"]
 }

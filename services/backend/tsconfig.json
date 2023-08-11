@@ -8,5 +8,6 @@
 		"sourceMap": true,
 		"outDir": "./dist",
 		"baseUrl": "./"
-	}
+	},
+	"references": [{ "path": "../../packages/prisma/tsconfig.json" }]
 }
