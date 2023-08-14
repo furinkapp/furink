@@ -1,3 +1,5 @@
+/* eslint-disable complexity */
+
 const HTTPS_PORT = 443;
 const REDIS_PORT = 6379;
 
@@ -16,6 +18,10 @@ export const loadConfiguration = () => ({
 			apiKey: process.env.TYPESENSE_API_KEY ?? "",
 			connectionTimeoutSeconds: Number(process.env.TYPESENSE_CONNECTION_TIMEOUT_SECONDS ?? 10),
 			protocol: "https",
+		},
+		supabase: {
+			url: process.env.SUPABASE_URL ?? "",
+			key: process.env.SUPABASE_KEY ?? "",
 		},
 		redis: {
 			clusters: [
