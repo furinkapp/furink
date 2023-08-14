@@ -9,6 +9,9 @@ module.exports = {
 		// broken in eslint-config-infernal
 		"new-cap": "off",
 		"no-void": "off",
+		// broken in eslint-config-infernal
+		"no-empty-function": "off",
+		"@typescript-eslint/no-empty-function": "warn",
 	},
 	ignorePatterns: ["next-env.d.ts"],
 };
