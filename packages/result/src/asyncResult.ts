@@ -11,30 +11,8 @@ export interface AsyncResult<T, E> extends Promise<Result<T, E>> {
 	orElse<F>(fn: (err: E) => AsyncResult<T, F>): AsyncResult<T, F>;
 }
 
-export interface AsyncOk<T> extends AsyncResult<T, never> {
-	unwrapOr<U>(defaultValue: U): Promise<T>;
-	unwrapOrElse<U>(fn: (err: never) => U): Promise<T>;
-	map<U>(fn: (value: T) => U): AsyncOk<U>;
-	mapErr<U>(fn: (err: never) => U): AsyncOk<U>;
-	and<U, E>(res: AsyncResult<U, E>): AsyncResult<U, E>;
-	andThen<U, E>(fn: (value: T) => AsyncResult<U, E>): AsyncResult<U, E>;
-	or<F>(res: AsyncResult<T, F>): AsyncOk<T>;
-	orElse<F>(fn: (err: never) => AsyncResult<T, F>): AsyncOk<T>;
-}
-
-export interface AsyncErr<E> extends AsyncResult<never, E> {
-	unwrapOr<U>(defaultValue: U): Promise<U>;
-	unwrapOrElse<U>(fn: (err: E) => U): Promise<U>;
-	map<U>(fn: (value: never) => U): AsyncErr<E>;
-	mapErr<U>(fn: (err: E) => U): AsyncErr<U>;
-	and<U>(res: AsyncResult<U, E>): AsyncErr<E>;
-	andThen<U>(fn: (value: never) => AsyncResult<U, E>): AsyncResult<U, E>;
-	or<T, F>(res: AsyncResult<T, F>): AsyncResult<T, F>;
-	orElse<T, F>(fn: (err: E) => AsyncResult<T, F>): AsyncResult<T, F>;
-}
-
 class AsyncResultImpl<T, E> extends Promise<Result<T, E>> implements AsyncResult<T, E> {
-	static from<T, E>(promise: Promise<T>) {
+	static fromRaw<T, E>(promise: Promise<T>) {
 		return new AsyncResultImpl<T, E>(
 			promise.then(
 				(v) => Result.ok(v),
@@ -43,12 +21,8 @@ class AsyncResultImpl<T, E> extends Promise<Result<T, E>> implements AsyncResult
 		);
 	}
 
-	static ok<T>(value: T): AsyncOk<T> {
-		return new AsyncResultImpl<T, never>(Promise.resolve(Result.ok(value)));
-	}
-
-	static err<E>(err: E): AsyncErr<E> {
-		return new AsyncResultImpl<never, E>(Promise.resolve(Result.err(err)));
+	static from<T, E>(result: Promise<Result<T, E>>) {
+		return new AsyncResultImpl<T, E>(result);
 	}
 
 	private constructor(promise: Promise<Result<T, E>>) {
@@ -69,42 +43,45 @@ class AsyncResultImpl<T, E> extends Promise<Result<T, E>> implements AsyncResult
 		return result.unwrapOrElse(fn);
 	}
 
-	async map<U>(fn: (value: T) => U): AsyncResultImpl<U, E> {
-		const result: Result<T, E> = await this;
-		return result.map(fn);
+	map<U>(fn: (value: T) => U): AsyncResultImpl<U, E> {
+		return new AsyncResultImpl<U, E>(this.then((result) => result.map(fn)));
 	}
 
-	async mapErr<U>(fn: (err: E) => U): AsyncResult<T, U> {
-		throw new Error("Method not implemented.");
+	mapErr<U>(fn: (err: E) => U): AsyncResult<T, U> {
+		return new AsyncResultImpl<T, U>(this.then((result) => result.mapErr(fn)));
 	}
 
-	async and<U>(res: AsyncResult<U, E>): AsyncResult<U, E> {
-		throw new Error("Method not implemented.");
+	and<U>(res: AsyncResult<U, E>): AsyncResult<U, E> {
+		return new AsyncResultImpl<U, E>(
+			Promise.all([this, res])
+				.then(([a, b]) => a.and(b))
+				.catch((e) => Result.err(e)),
+		);
 	}
 
 	andThen<U>(fn: (value: T) => AsyncResult<U, E>): AsyncResult<U, E> {
-		throw new Error("Method not implemented.");
+		return new AsyncResultImpl<U, E>(
+			this.then((result) => result.andThen(fn)).catch((e) => Result.err(e)),
+		);
 	}
 
 	or<F>(res: AsyncResult<T, F>): AsyncResult<T, F> {
-		throw new Error("Method not implemented.");
+		return new AsyncResultImpl<T, F>(
+			Promise.all([this, res])
+				.then(([a, b]) => a.or(b))
+				.catch((e) => Result.err(e)),
+		);
 	}
 
 	orElse<F>(fn: (err: E) => AsyncResult<T, F>): AsyncResult<T, F> {
-		throw new Error("Method not implemented.");
+		return new AsyncResultImpl<T, F>(
+			this.then((result) => result.orElse(fn)).catch((e) => Result.err(e)),
+		);
 	}
 }
 
-export function asyncOk<T>(value: T) {
-	// enforce Ok<T> since unwrapOr has a different return type
-	return AsyncResult.ok(value);
-}
-export function asyncErr<E>(err: E) {
-	return AsyncResult.err(err);
-}
-
 // eslint-disable-next-line @typescript-eslint/no-redeclare
-export const AsyncResult = AsyncResultImpl as unknown as {
-	ok<T>(value: T): AsyncOk<T>;
-	err<E>(err: E): AsyncErr<E>;
+export const AsyncResult = AsyncResultImpl as {
+	fromRaw<T, E>(promise: Promise<T>): AsyncResult<T, E>;
+	from<T, E>(result: Promise<Result<T, E>>): AsyncResult<T, E>;
 };

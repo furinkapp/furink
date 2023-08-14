@@ -1,13 +1,13 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect } from "vitest";
 
-import { asyncOk } from "../src";
+import { AsyncResult } from "../src";
 
 describe("AsyncResult", () => {
-	it("should work", async () => {
-		const result = await asyncOk(3)
-			.and(asyncOk(4))
-			.map((v) => v + 3);
-
-		expect(result).toBe(6);
+	describe("AsyncResult.fromRaw", async () => {
+		const myFunction = async () => 42;
+		const result = await AsyncResult.fromRaw(myFunction()).map((value) => value * 2);
+		expect(result.isOk());
+		//@ts-expect-error
+		expect(result.unwrap()).toBe(84);
 	});
 });

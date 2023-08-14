@@ -1,2 +1,2 @@
 export { Result, err, ok } from "./result";
-export { AsyncResult, asyncErr, asyncOk } from "./asyncResult";
+export { AsyncResult } from "./asyncResult";
