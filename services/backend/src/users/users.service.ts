@@ -28,8 +28,11 @@ export class UsersService {
 		const user = await this.prisma.user.findUnique({
 			where: { id },
 		});
+		if (!user) {
+			throw new NotFoundException(`User with ID ${id} not found`);
+		}
 		const orders = await this.prisma.order.findUnique({
-			where: { id: orderId, customerId: user?.id },
+			where: { id: orderId, customerId: user.id },
 		});
 		if (!orders) {
 			throw new NotFoundException(`Order with ID ${orderId} not found for user with ID ${id}`);
