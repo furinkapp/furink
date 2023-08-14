@@ -277,6 +277,9 @@ importers:
       typesense:
         specifier: ^1.5.4
         version: 1.5.4(@babel/runtime@7.22.10)
+      zod:
+        specifier: ^3.21.4
+        version: 3.21.4
     devDependencies:
       '@nestjs/cli':
         specifier: ^10.1.11
