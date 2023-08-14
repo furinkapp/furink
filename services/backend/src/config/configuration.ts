@@ -1,4 +1,5 @@
 const HTTPS_PORT = 443;
+const REDIS_PORT = 6379;
 
 export const loadConfiguration = () => ({
 	upstream: {
@@ -15,6 +16,14 @@ export const loadConfiguration = () => ({
 			apiKey: process.env.TYPESENSE_API_KEY ?? "",
 			connectionTimeoutSeconds: Number(process.env.TYPESENSE_CONNECTION_TIMEOUT_SECONDS ?? 10),
 			protocol: "https",
+		},
+		redis: {
+			clusters: [
+				{
+					host: process.env.REDIS_HOST ?? "",
+					port: Number(process.env.REDIS_PORT ?? REDIS_PORT),
+				},
+			],
 		},
 	},
 });
