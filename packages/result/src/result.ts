@@ -1,86 +1,31 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 
-/**
- * A type that represents either success (`Ok`) or failure (`Err`).
- */
-export interface Result<T, E> {
-	/**
-	 * Unwraps the result, or uses a default value if the result is an error.
-	 * @param defaultValue
-	 */
+export interface BaseResult<T, E> {
 	unwrapOr<U>(defaultValue: U): T | U;
-	/**
-	 * Unwraps the result, or computes a default value from the error.
-	 * @param fn The function to call if the result is an error. This function should not throw as
-	 * this will escape the Result-handling process!
-	 */
 	unwrapOrElse<U>(fn: (err: E) => U): T | U;
-	/**
-	 * Maps a `Result<T, E>` to `Result<U, E>` by applying a function to a contained Ok value, leaving
-	 * an Err value untouched.
-	 * @param fn The function to call if the result is Ok. This function should not throw as this
-	 * will escape the Result-handling process!
-	 */
 	map<U>(fn: (value: T) => U): Result<U, E>;
-	/**
-	 * Maps a `Result<T, E>` to `Result<T, F>` by applying a function to a contained Err value, leaving
-	 * an Ok value untouched.
-	 * @param fn The function to call if the result is Err. This function should not throw as this
-	 * will escape the Result-handling process!
-	 */
 	mapErr<U>(fn: (err: E) => U): Result<T, U>;
-	/**
-	 * Returns res if the result is Ok, otherwise returns the Err value of self.
-	 * @param res The result to return if this result is Ok.
-	 * @returns res if the result is Ok, otherwise returns the Err value of self.
-	 */
 	and<U>(res: Result<U, E>): Result<U, E>;
-	/**
-	 * Returns the result of applying fn to the contained value if this result is Ok, otherwise
-	 * returns the Err value of self.
-	 * @param fn The function to call if the result is Ok. This function should not throw as this
-	 * will escape the Result-handling process!
-	 * @returns the result of applying fn to the contained value if this result is Ok, otherwise
-	 * returns the Err value of self.
-	 */
 	andThen<U>(fn: (value: T) => Result<U, E>): Result<U, E>;
 	or<F>(res: Result<T, F>): Result<T, F>;
 	orElse<F>(fn: (err: E) => Result<T, F>): Result<T, F>;
 	isOk(): this is Ok<T>;
 	isErr(): this is Err<E>;
+	assertOk(): asserts this is Ok<T>;
+	assertErr(): asserts this is Err<T>;
 }
 
-export interface Ok<T> extends Result<T, never> {
+export interface Ok<T> extends BaseResult<T, never> {
 	unwrap(): T;
-	unwrapErr(): never;
-
-	// overrides
-	unwrapOr(defaultValue: unknown): T;
-	unwrapOrElse(fn: (err: never) => unknown): T;
-	map<U>(fn: (value: T) => U): Ok<U>;
-	mapErr<U>(fn: (err: never) => U): this;
-	and<U, E>(res: Result<U, E>): Result<U, E>;
-	andThen<U, E>(fn: (value: T) => Result<U, E>): Result<U, E>;
-	or<F>(res: Result<T, F>): this;
-	orElse<F>(fn: (err: never) => Result<T, F>): this;
 }
 
-export interface Err<E> extends Result<never, E> {
-	unwrap(): never;
+export interface Err<E> extends BaseResult<never, E> {
 	unwrapErr(): E;
-
-	// overrides
-	unwrapOr<U>(defaultValue: U): U;
-	unwrapOrElse<U>(fn: (err: E) => U): U;
-	map<U>(fn: (value: never) => U): this;
-	mapErr<U>(fn: (err: E) => U): Err<U>;
-	and<U>(res: Result<U, E>): this;
-	andThen<U>(fn: (value: never) => Result<U, E>): this;
-	or<T, F>(res: Result<T, F>): Result<T, F>;
-	orElse<T, F>(fn: (err: E) => Result<T, F>): Result<T, F>;
 }
 
-class ResultImpl<T, E> implements Result<T, E> {
+export type Result<T, E> = Ok<T> | Err<E>;
+
+class ResultImpl<T, E> implements BaseResult<T, E> {
 	static ok<T>(value: T): Ok<T> {
 		return new ResultImpl(true, value, undefined as never) as unknown as Ok<T>;
 	}
@@ -96,6 +41,18 @@ class ResultImpl<T, E> implements Result<T, E> {
 		// eslint-disable-next-line @typescript-eslint/no-shadow
 		private readonly err: E,
 	) {}
+
+	assertOk(): asserts this is Ok<T> {
+		if (!this.ok) {
+			throw new Error("assertOk called on 'Err' variant");
+		}
+	}
+
+	assertErr(): asserts this is Err<T> {
+		if (this.ok) {
+			throw new Error("assertErr called on 'Ok' variant");
+		}
+	}
 
 	unwrap(): T {
 		if (this.isOk()) {

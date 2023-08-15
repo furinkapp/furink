@@ -1,4 +1,4 @@
-import { Err, Ok, Result } from "./result";
+import { Result } from "./result";
 
 /**
  * A fancy wrapper around `Promise` enabling the use of `Result` methods on async operations.
@@ -27,7 +27,6 @@ export interface AsyncResult<T, E> {
 	andThen<U>(fn: (value: T) => AsyncResult<U, E>): AsyncResult<U, E>;
 	or<F>(res: AsyncResult<T, F>): AsyncResult<T, F>;
 	orElse<F>(fn: (err: E) => AsyncResult<T, F>): AsyncResult<T, F>;
-
 	promise(): Promise<Result<T, E>>;
 }
 
@@ -74,7 +73,7 @@ class AsyncResultImpl<T, E> implements AsyncResult<T, E> {
 				if (result.isOk()) {
 					return fn(result.unwrap()).promise();
 				}
-				return Promise.resolve(result as Err<E>);
+				return Promise.resolve(result);
 			}),
 		);
 	}
@@ -89,7 +88,7 @@ class AsyncResultImpl<T, E> implements AsyncResult<T, E> {
 				if (result.isErr()) {
 					return fn(result.unwrapErr()).promise();
 				}
-				return Promise.resolve(result as Ok<T>);
+				return Promise.resolve(result);
 			}),
 		);
 	}

@@ -20,14 +20,12 @@ describe("Result", () => {
 			const result = Result.ok(1);
 			const mapped = result.map((value) => value + 1);
 			expect(mapped.isOk());
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 			expect(mapped.unwrap()).toBe(2);
 		});
 		it("should produce the original value when invoked on an 'Err' variant", () => {
 			const result = Result.err(1);
 			const mapped = result.map((value: number) => value + 1);
 			expect(mapped.isErr());
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 			expect(mapped.unwrapErr()).toBe(1);
 		});
 	});
@@ -35,15 +33,14 @@ describe("Result", () => {
 		it("should produce the mapped value when invoked on an 'Err' variant", () => {
 			const result = Result.err(1);
 			const mapped = result.mapErr((value) => value + 1);
-			expect(mapped.isErr());
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			mapped.assertErr();
 			expect(mapped.unwrapErr()).toBe(2);
 		});
 		it("should produce the original value when invoked on an 'Ok' variant", () => {
 			const result = Result.ok(1);
 			const mapped = result.mapErr((value: number) => value + 1);
-			expect(mapped.isOk());
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+
+			mapped.assertOk();
 			expect(mapped.unwrap()).toBe(1);
 		});
 	});
@@ -92,7 +89,7 @@ describe("Result", () => {
 			});
 			expect(mapped.isErr());
 			expect(wasInvoked).toBe(false);
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			mapped.assertErr();
 			expect(mapped.unwrapErr()).toBe(1);
 		});
 	});
