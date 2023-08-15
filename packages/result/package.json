@@ -1,0 +1,16 @@
+{
+	"name": "@furinkapp/result",
+	"version": "0.1.0",
+	"description": "",
+	"main": "dist/index.js",
+	"scripts": {
+		"build": "tsc",
+		"test": "vitest"
+	},
+	"keywords": [],
+	"author": "Skye Elliot",
+	"license": "(MIT or Apache-2.0)",
+	"devDependencies": {
+		"vitest": "^0.34.1"
+	}
+}
