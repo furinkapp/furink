@@ -1,11 +1,48 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 
+/**
+ * A type that represents either success (`Ok`) or failure (`Err`).
+ */
 export interface Result<T, E> {
+	/**
+	 * Unwraps the result, or uses a default value if the result is an error.
+	 * @param defaultValue
+	 */
 	unwrapOr<U>(defaultValue: U): T | U;
+	/**
+	 * Unwraps the result, or computes a default value from the error.
+	 * @param fn The function to call if the result is an error. This function should not throw as
+	 * this will escape the Result-handling process!
+	 */
 	unwrapOrElse<U>(fn: (err: E) => U): T | U;
+	/**
+	 * Maps a `Result<T, E>` to `Result<U, E>` by applying a function to a contained Ok value, leaving
+	 * an Err value untouched.
+	 * @param fn The function to call if the result is Ok. This function should not throw as this
+	 * will escape the Result-handling process!
+	 */
 	map<U>(fn: (value: T) => U): Result<U, E>;
+	/**
+	 * Maps a `Result<T, E>` to `Result<T, F>` by applying a function to a contained Err value, leaving
+	 * an Ok value untouched.
+	 * @param fn The function to call if the result is Err. This function should not throw as this
+	 * will escape the Result-handling process!
+	 */
 	mapErr<U>(fn: (err: E) => U): Result<T, U>;
+	/**
+	 * Returns res if the result is Ok, otherwise returns the Err value of self.
+	 * @param res The result to return if this result is Ok.
+	 * @returns res if the result is Ok, otherwise returns the Err value of self.
+	 */
 	and<U>(res: Result<U, E>): Result<U, E>;
+	/**
+	 * Returns the result of applying fn to the contained value if this result is Ok, otherwise
+	 * returns the Err value of self.
+	 * @param fn The function to call if the result is Ok. This function should not throw as this
+	 * will escape the Result-handling process!
+	 * @returns the result of applying fn to the contained value if this result is Ok, otherwise
+	 * returns the Err value of self.
+	 */
 	andThen<U>(fn: (value: T) => Result<U, E>): Result<U, E>;
 	or<F>(res: Result<T, F>): Result<T, F>;
 	orElse<F>(fn: (err: E) => Result<T, F>): Result<T, F>;
@@ -139,16 +176,33 @@ class ResultImpl<T, E> implements Result<T, E> {
 	}
 }
 
+/**
+ * Creates a new `Ok` result.
+ * @param value The value to wrap.
+ */
 export function ok<T>(value: T) {
 	// enforce Ok<T> since unwrapOr has a different return type
 	return ResultImpl.ok(value);
 }
+
+/**
+ * Creates a new `Err` result.
+ * @param err The error to wrap.
+ */
 export function err<E>(err: E): Err<E> {
 	return ResultImpl.err(err);
 }
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const Result = ResultImpl as unknown as {
+	/**
+	 * Creates a new `Ok` result.
+	 * @param value The value to wrap.
+	 */
 	ok<T>(value: T): Ok<T>;
+	/**
+	 * Creates a new `Err` result.
+	 * @param err The error to wrap.
+	 */
 	err<E>(err: E): Err<E>;
 };
