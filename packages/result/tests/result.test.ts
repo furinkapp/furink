@@ -66,6 +66,7 @@ describe("Result", () => {
 		it("should produce the original value when invoked on an 'Ok' variant", () => {
 			const result = Result.ok(1);
 			const mapped = result.and(Result.err(2));
+			expect(mapped.isErr()).toBe(true);
 		});
 	});
 	describe("Result.andThen", () => {
