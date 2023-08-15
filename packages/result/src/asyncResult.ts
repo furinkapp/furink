@@ -30,7 +30,7 @@ export interface AsyncResult<T, E> extends Promise<Result<T, E>> {
 }
 
 class AsyncResultImpl<T, E> extends Promise<Result<T, E>> implements AsyncResult<T, E> {
-	static fromRaw<T, E>(promise: Promise<T>) {
+	static fromRaw<T, E>(promise: Promise<T>): AsyncResult<T, E> {
 		return new AsyncResultImpl<T, E>(
 			promise.then(
 				(v) => Result.ok(v),
@@ -60,27 +60,28 @@ class AsyncResultImpl<T, E> extends Promise<Result<T, E>> implements AsyncResult
 	}
 
 	map<U>(fn: (value: T) => U): AsyncResultImpl<U, E> {
-		return new AsyncResultImpl<U, E>(this.then((result) => result.map(fn)));
+		console.log(this);
+		return new AsyncResultImpl(this.then((result) => result.map(fn)));
 	}
 
 	mapErr<U>(fn: (err: E) => U): AsyncResult<T, U> {
-		return new AsyncResultImpl<T, U>(this.then((result) => result.mapErr(fn)));
+		return new AsyncResultImpl(this.then((result) => result.mapErr(fn)));
 	}
 
 	and<U>(res: AsyncResult<U, E>): AsyncResult<U, E> {
-		return new AsyncResultImpl<U, E>(Promise.all([this, res]).then(([a, b]) => a.and(b)));
+		return new AsyncResultImpl(Promise.all([this, res]).then(([a, b]) => a.and(b)));
 	}
 
 	andThen<U>(fn: (value: T) => AsyncResult<U, E>): AsyncResult<U, E> {
-		return new AsyncResultImpl<U, E>(this.then((result) => result.andThen(fn)));
+		return new AsyncResultImpl(this.then((result) => result.andThen(fn)));
 	}
 
 	or<F>(res: AsyncResult<T, F>): AsyncResult<T, F> {
-		return new AsyncResultImpl<T, F>(Promise.all([this, res]).then(([a, b]) => a.or(b)));
+		return new AsyncResultImpl(Promise.all([this, res]).then(([a, b]) => a.or(b)));
 	}
 
 	orElse<F>(fn: (err: E) => AsyncResult<T, F>): AsyncResult<T, F> {
-		return new AsyncResultImpl<T, F>(
+		return new AsyncResultImpl(
 			this.then((result) => result.orElse(fn)).catch((e) => Result.err(e)),
 		);
 	}
