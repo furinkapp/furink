@@ -262,6 +262,9 @@ importers:
       '@sentry/node':
         specifier: ^7.63.0
         version: 7.63.0
+      '@supabase/supabase-js':
+        specifier: ^2.32.0
+        version: 2.32.0(encoding@0.1.13)
       ioredis:
         specifier: ^5.3.2
         version: 5.3.2
