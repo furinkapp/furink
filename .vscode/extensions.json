@@ -1,0 +1,16 @@
+{
+	"recommendations": [
+		"dbaeumer.vscode-eslint",
+		"tamasfe.even-better-toml",
+		"mikestead.dotenv",
+		"github.vscode-github-actions",
+		"codezombiech.gitignore",
+		"davidanson.vscode-markdownlint",
+		"prisma.prisma",
+		"esbenp.prettier-vscode",
+		"rust-lang.rust-analyzer",
+		"tauri-apps.tauri-vscode",
+		"mike-co.import-sorter",
+		"redhat.vscode-yaml"
+	]
+}

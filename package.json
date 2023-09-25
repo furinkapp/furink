@@ -4,6 +4,11 @@
 		"prepare": "husky install",
 		"dev": "turbo dev"
 	},
+	"workspaces": [
+		"packages/*",
+		"apps/*",
+		"services/*"
+	],
 	"devDependencies": {
 		"@commitlint/cli": "^17",
 		"@commitlint/config-conventional": "^17",
