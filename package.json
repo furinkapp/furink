@@ -3,6 +3,11 @@
 	"scripts": {
 		"prepare": "husky install"
 	},
+	"workspaces": [
+		"packages/*",
+		"apps/*",
+		"services/*"
+	],
 	"devDependencies": {
 		"@commitlint/cli": "^17",
 		"@commitlint/config-conventional": "^17",
