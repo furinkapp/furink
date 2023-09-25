@@ -3,6 +3,7 @@ import { ConfigModule } from "@nestjs/config";
 
 import { CommonModule } from "./common/common.module";
 import { loadConfiguration } from "./config/configuration";
+import { UsersModule } from "./users/users.module";
 
 @Module({
 	imports: [
@@ -10,6 +11,7 @@ import { loadConfiguration } from "./config/configuration";
 			load: [loadConfiguration],
 		}),
 		CommonModule,
+		UsersModule,
 	],
 	controllers: [],
 	providers: [],
