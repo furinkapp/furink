@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, NotFoundException } from "@nestjs/common";
-import { UsersService } from "./users.service";
+import { Order, Shop, User } from "@furinkapp/prisma";
+import { Controller, Get, NotFoundException, Param } from "@nestjs/common";
+
 import { PrismaService } from "../common/providers/prisma.service";
-import { User, Shop, Order, Prisma } from "@furinkapp/prisma";
+import { UsersService } from "./users.service";
 
 @Controller("users")
 export class UsersController {
@@ -39,20 +40,5 @@ export class UsersController {
 		@Param("orderId") orderId: string,
 	): Promise<Order> {
 		return this.usersService.getOrderForUser(id, orderId);
-	}
-
-	@Post()
-	async createUser(@Body() data: Prisma.UserCreateInput): Promise<User> {
-		return this.usersService.createUser(data);
-	}
-
-	@Put(":id")
-	async updateUser(@Param("id") id: string, @Body() data: Prisma.UserUpdateInput): Promise<User> {
-		return this.usersService.updateUser(id, data);
-	}
-
-	@Delete(":id")
-	async deleteUser(@Param("id") id: string): Promise<User> {
-		return this.usersService.deleteUser(id);
 	}
 }

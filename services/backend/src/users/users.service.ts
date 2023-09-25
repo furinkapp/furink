@@ -1,6 +1,7 @@
+import { Order, Prisma, Shop, ShopPost, User } from "@furinkapp/prisma";
 import { Injectable, NotFoundException } from "@nestjs/common";
+
 import { PrismaService } from "../common/providers/prisma.service";
-import { User, Shop, Order, ShopPost, Prisma } from "@furinkapp/prisma";
 
 @Injectable()
 export class UsersService {
@@ -59,12 +60,12 @@ export class UsersService {
 		});
 	}
 
-	async updateUser(id: string, data: Prisma.UserUpdateInput): Promise<User> {
-		return this.prisma.user.update({
-			where: { id },
-			data,
-		});
-	}
+	// async updateUser(id: string, data: Prisma.UserUpdateInput): Promise<User> {
+	// 	return this.prisma.user.update({
+	// 		where: { id },
+	// 		data,
+	// 	});
+	// }
 
 	async deleteUser(id: string): Promise<User> {
 		return this.prisma.user.delete({
