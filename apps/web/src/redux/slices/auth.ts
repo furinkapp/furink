@@ -33,8 +33,8 @@ export const register = createAsyncThunk<
 		})
 		.then(
 			(res) => ({ success: true, ...res.data }),
-			(err: unknown) => ({ success: false, error: err })
-		)
+			(err: unknown) => ({ success: false, error: err }),
+		),
 );
 
 export const loginWithPassword = createAsyncThunk(
@@ -42,8 +42,8 @@ export const loginWithPassword = createAsyncThunk(
 	async (data: LoginPayload) =>
 		supabase.auth.signInWithPassword(data).then(
 			(res) => ({ success: true, ...res.data }),
-			(err) => ({ success: false, error: err as unknown })
-		)
+			(err) => ({ success: false, error: err as unknown }),
+		),
 );
 
 export const auth = createSlice({
