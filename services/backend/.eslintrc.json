@@ -1,0 +1,7 @@
+{
+	"extends": "../../.eslintrc.js",
+	"rules": {
+		"@typescript-eslint/no-extraneous-class": "off",
+		"multiline-comment-style": "off"
+	}
+}

@@ -3,11 +3,12 @@
 	"version": "1.0.0",
 	"main": "dist/index.js",
 	"scripts": {
-		"dev": "prisma generate --watch & tsc --watch"
+		"dev": "prisma generate --watch",
+		"build:dev": "prisma generate"
 	},
 	"devDependencies": {
 		"@mermaid-js/mermaid-cli": "^10.3.0",
-		"prisma": "^5.1.1",
+		"prisma": "^5.3.1",
 		"prisma-erd-generator": "^1.11.0",
 		"typescript": "^5.1.6"
 	},
