@@ -1,9 +1,19 @@
 {
+	"name": "furinkapp",
 	"private": true,
 	"scripts": {
 		"prepare": "husky install",
-		"dev": "turbo dev"
+		"build": "turbo run build",
+		"dev": "turbo run dev",
+		"lint": "turbo run lint",
+		"format": "prettier --write ."
 	},
+	"packageManager": "bun@1.0.3",
+	"workspaces": [
+		"packages/*",
+		"apps/*",
+		"services/*"
+	],
 	"devDependencies": {
 		"@commitlint/cli": "^17",
 		"@commitlint/config-conventional": "^17",
